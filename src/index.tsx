@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Home } from "./pages/home";
 import { UseContextPage } from "./pages/useContextPage";
 import { Navigation } from "./components/navigation";
@@ -19,6 +19,7 @@ root.render(
       <Routes>
         <Route index element={<Home />} />
         <Route path={paths.useContext} element={<UseContextPage />}></Route>
+        <Route path='*' element={<Navigate to='/' replace />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

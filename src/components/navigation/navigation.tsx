@@ -10,7 +10,7 @@ function Navigation() {
   return (
     <Navbar bg='light' expand='lg'>
       <Container fluid>
-        <Navbar.Brand href='#'>Navbar scroll</Navbar.Brand>
+        <Navbar.Brand href={paths.home}>Home</Navbar.Brand>
         <Navbar.Toggle aria-controls='navbarScroll' />
         <Navbar.Collapse id='navbarScroll'>
           <Nav
@@ -18,9 +18,11 @@ function Navigation() {
             style={{ maxHeight: "100px" }}
             navbarScroll
           >
-            <Nav.Link href={paths.home}>Home</Nav.Link>
+            {/* <Nav.Link href={paths.home}>Home</Nav.Link> */}
             <NavDropdown title='Hooks' id='navbarScrollingDropdown'>
-              <NavDropdown.Item href={paths.useContext}>useContext</NavDropdown.Item>
+              <NavDropdown.Item href={paths.useContext}>
+                useContext
+              </NavDropdown.Item>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>

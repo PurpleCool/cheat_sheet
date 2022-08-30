@@ -1,9 +1,8 @@
 export const links = {
   home: "",
-  useContext: "useContext,",
+  useContext: "useContext",
 };
 
-
-export const paths = (() => {
-  return Object.fromEntries(Object.entries(links).map(([key, value]) => [key, '/' + value]));
-})();
+export const paths = Object.fromEntries(
+  Object.entries(links).map(([key, value]) => [key, "/" + value])
+);
