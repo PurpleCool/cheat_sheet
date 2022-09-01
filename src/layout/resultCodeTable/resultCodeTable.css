@@ -1,0 +1,11 @@
+.result-code-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .result-code-wrapper {
+    border: 3px solid;
+  }
+}
