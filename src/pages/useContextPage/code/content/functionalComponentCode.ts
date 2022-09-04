@@ -1,4 +1,4 @@
-import { useContext } from "react";
+export default `import { useContext } from "react";
 // You need to import ThemeContext to know the current state 
 import { ThemeContext } from "./themeContext";
 
@@ -12,8 +12,10 @@ export default function FunctionContextComponent() {
   };
 
   return (
-    <div className='fcc-example' style={getThemeStyles(darkTheme)}>
+    <div style={getThemeStyles(darkTheme)}>
       Functional Component Example
     </div>
   );
 }
+`;
+

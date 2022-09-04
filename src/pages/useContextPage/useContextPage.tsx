@@ -5,10 +5,11 @@ import { Result } from "./result";
 import "./useContextPage.css";
 import { Code } from "./code";
 import { ResultCodeTable } from "../../layout/resultCodeTable";
+import "./useContextPage.css";
 
 export default function UseContextPage() {
   return (
-    <>
+    <div className='page'>
       <ResultCodeTable>
         <Code />
         <Result />
@@ -20,7 +21,8 @@ export default function UseContextPage() {
         height={600}
         defaultTab='js,result'
         preview={false}
+        editable={true}
       />
-    </>
+    </div>
   );
 }

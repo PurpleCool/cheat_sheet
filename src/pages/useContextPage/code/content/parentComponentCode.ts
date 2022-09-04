@@ -1,8 +1,7 @@
-import { useState } from "react";
+export default `import { useState } from "react";
 import { ThemeContext } from "./themeContext";
 import ClassContextComponent from "./classContextComponent";
 import FunctionContextComponent from "./functionContextComponent";
-import "./result.css";
 
 export default function ContextParent() {
   const [darkTheme, setDarkTheme] = useState(true);
@@ -14,7 +13,7 @@ export default function ContextParent() {
   return (
     // You still need to wrap your functional component in the Provider
     <ThemeContext.Provider value={darkTheme}>
-      <button className='toggle-btn' onClick={toggleTheme}>
+      <button onClick={toggleTheme}>
         Toggle Theme
       </button>
       <FunctionContextComponent />
@@ -22,3 +21,4 @@ export default function ContextParent() {
     </ThemeContext.Provider>
   );
 }
+`;

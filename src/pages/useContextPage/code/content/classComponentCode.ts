@@ -1,4 +1,4 @@
-import { Component } from "react";
+export default `import { Component } from "react";
 // You need to import ThemeContext to know the current state 
 import { ThemeContext } from "./themeContext";
 
@@ -14,7 +14,7 @@ export default class ClassContextComponent extends Component {
     return (
       <ThemeContext.Consumer>
         {(darkTheme) => (
-          <div className='ccc-example' style={this.getThemeStyles(darkTheme)}>
+          <div style={this.getThemeStyles(darkTheme)}>
             Class Component Example
           </div>
         )}
@@ -22,3 +22,4 @@ export default class ClassContextComponent extends Component {
     );
   }
 }
+`;
