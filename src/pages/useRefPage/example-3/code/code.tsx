@@ -1,21 +1,13 @@
 import React, { useEffect, useLayoutEffect } from "react";
-import Prism from "prismjs";
-import "prismjs/components/prism-javascript"; // Language
-import "prismjs/themes/prism.css"; // Theme
-import "./code.css";
 import inputFocus from "./content/inputFocus";
+import { CodeSnippet, Subheader, Wrapper } from "../../../../components/code";
 
 export default function Code() {
-  useEffect(() => {
-    Prism.highlightAll();
-  }, []);
 
   return (
-    <div className='code'>
-      <span className='subheader'>How to use previous value:</span>
-      <pre>
-        <code className='language-javascript'>{inputFocus}</code>
-      </pre>
-    </div>
+    <Wrapper>
+      <Subheader>How to use previous value:</Subheader>
+      <CodeSnippet>{inputFocus}</CodeSnippet>
+    </Wrapper>
   );
 }
