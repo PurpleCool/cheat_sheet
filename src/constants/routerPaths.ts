@@ -1,6 +1,7 @@
 export const links = {
   home: "",
   useContext: "useContext",
+  useRef: "useRef",
 };
 
 export const paths = Object.fromEntries(

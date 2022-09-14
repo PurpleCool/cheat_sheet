@@ -2,7 +2,6 @@ import React from "react";
 
 import Codepen from "react-codepen-embed";
 import { Result } from "./result";
-import "./useContextPage.css";
 import { Code } from "./code";
 import { ResultCodeTable } from "../../layout/resultCodeTable";
 import "./useContextPage.css";
