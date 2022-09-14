@@ -21,7 +21,6 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "serve": "^14.0.1",
-    "typescript": "^4.8.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -29,12 +28,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [
@@ -49,6 +42,19 @@
     ]
   },
   "devDependencies": {
-    "@types/prismjs": "^1.26.0"
+    "@types/prismjs": "^1.26.0",
+    "@typescript-eslint/eslint-plugin": "^5.37.0",
+    "@typescript-eslint/parser": "^5.37.0",
+    "eslint": "^8.23.1",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-standard-with-typescript": "^23.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.2.5",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-promise": "^6.0.1",
+    "eslint-plugin-react": "^7.31.8",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "prettier": "^2.7.1",
+    "typescript": "^4.8.3"
   }
 }
