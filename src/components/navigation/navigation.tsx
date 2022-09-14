@@ -23,6 +23,9 @@ function Navigation() {
               <NavDropdown.Item href={paths.useContext}>
                 useContext
               </NavDropdown.Item>
+              <NavDropdown.Item href={paths.useRef}>
+                useRef
+              </NavDropdown.Item>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
