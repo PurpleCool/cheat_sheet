@@ -18,15 +18,13 @@ function Navigation() {
             style={{ maxHeight: "100px" }}
             navbarScroll
           >
-            {/* <Nav.Link href={paths.home}>Home</Nav.Link> */}
             <NavDropdown title='Hooks' id='navbarScrollingDropdown'>
               <NavDropdown.Item href={paths.useContext}>
                 useContext
               </NavDropdown.Item>
-              <NavDropdown.Item href={paths.useRef}>
-                useRef
-              </NavDropdown.Item>
+              <NavDropdown.Item href={paths.useRef}>useRef</NavDropdown.Item>
             </NavDropdown>
+            <Nav.Link href={paths.primeNumbers}>Prime numbers</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
