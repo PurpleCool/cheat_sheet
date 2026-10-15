@@ -2,12 +2,11 @@
   "name": "understanding_react",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "packageManager": "yarn@4.18.1",
   "engines": {
     "node": "24.x"
   },
-  "homepage": ".",
-  "start_url": "/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
@@ -23,22 +22,13 @@
     "react-codepen-embed": "^1.1.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.3.0",
-    "react-scripts": "5.0.1",
-    "serve": "^14.0.1",
     "typescript": "^4.8.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "browserslist": {
     "production": [
@@ -53,6 +43,8 @@
     ]
   },
   "devDependencies": {
-    "@types/prismjs": "^1.26.0"
+    "@types/prismjs": "^1.26.0",
+    "@vitejs/plugin-react": "~6.1.2",
+    "vite": "~8.3.4"
   }
 }
