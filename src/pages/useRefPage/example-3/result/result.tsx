@@ -4,7 +4,7 @@ export default function Result() {
   const [name, setName] = useState('');
   const prevName = useRef('');
   const renderCount = useRef(1);
-  const inputRef = useRef() as React.RefObject<HTMLInputElement>;
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const focus = () => {
     console.log(inputRef);
