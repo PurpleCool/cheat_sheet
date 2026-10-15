@@ -1,12 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import App from "./app";
-
-vi.mock("react-codepen-embed", () => ({
-  default: () => <div data-testid="codepen-embed" />,
-}));
 
 describe("App routing", () => {
   it("renders direct lesson routes and navigates without reloading", async () => {

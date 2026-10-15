@@ -32,3 +32,19 @@
   max-width: 768px;
   padding: 0 20px;
 }
+
+.playground {
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 0 20px 20px;
+}
+
+.playground-toggle {
+  background: #333;
+  border: 0;
+  border-radius: 0.25rem;
+  color: #fff;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  padding: 0.55rem 0.85rem;
+}

@@ -1,5 +1,4 @@
 import React from "react";
-import Codepen from "react-codepen-embed";
 
 import { ExampleView } from "../../components/example";
 import { useRefExamples } from "./examples";
@@ -14,14 +13,6 @@ export default function UseRefPage() {
           <div className='divider'></div>
         </React.Fragment>
       ))}
-      <Codepen
-        hash='XWqNzeX'
-        user='PurpleCool'
-        height={600}
-        defaultTab='js,result'
-        preview={false}
-        editable={true}
-      />
     </div>
   );
 }

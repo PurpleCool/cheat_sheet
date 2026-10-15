@@ -9,10 +9,11 @@ import "./example.css";
 
 interface CodeViewerProps {
   files: ExampleSourceFile[];
+  headingId?: string;
   title: string;
 }
 
-export default function CodeViewer({ files, title }: CodeViewerProps) {
+export default function CodeViewer({ files, headingId, title }: CodeViewerProps) {
   const [activePath, setActivePath] = useState(files[0].path);
   const codeRef = useRef<HTMLElement>(null);
   const activeFile =
@@ -26,7 +27,9 @@ export default function CodeViewer({ files, title }: CodeViewerProps) {
 
   return (
     <section className="code" aria-label={`${title} source code`}>
-      <h2 className="subheader">{title}</h2>
+      <h2 className="subheader" id={headingId}>
+        {title}
+      </h2>
       {files.length > 1 && (
         <div className="code-tabs" role="tablist" aria-label="Source files">
           {files.map(({ path }) => (

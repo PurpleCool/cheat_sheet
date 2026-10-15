@@ -1,7 +1,7 @@
 # React Cheat Sheet
 
 Interactive React examples with the exact source files used to render each
-result.
+result. Every example can also be opened in an editable Sandpack playground.
 
 [See the deployed React Cheat Sheet](https://purplecoolcheatsheet.netlify.app/)
 
@@ -37,4 +37,6 @@ The production build is written to `dist/`. Netlify settings are versioned in
 Keep the example as normal type-checked `.ts`, `.tsx`, and `.css` files. Import
 those files normally for execution and with Vite's `?raw` suffix for display,
 then register both sides in an `ExampleDefinition`. Do not create a separate
-string copy of the source.
+string copy of the source. Set `playground.entryFile` to expose the same files
+in Sandpack. The playground is loaded only after the user opens it and requires
+network access to the CodeSandbox bundler runtime.

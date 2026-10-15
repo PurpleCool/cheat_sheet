@@ -3,6 +3,7 @@ import ClassContextComponentSource from "./result/classContextComponent.tsx?raw"
 import ContextParentSource from "./result/contextParent.tsx?raw";
 import FunctionContextComponentSource from "./result/functionContextComponent.tsx?raw";
 import ResultStylesSource from "./result/result.css?raw";
+import ResultSource from "./result/result.tsx?raw";
 import ThemeContextSource from "./result/themeContext.ts?raw";
 import { Result } from "./result";
 
@@ -11,6 +12,11 @@ export const useContextExample: ExampleDefinition = {
   title: "Sharing theme state with useContext",
   entry: Result,
   files: [
+    {
+      path: "result.tsx",
+      language: "tsx",
+      source: ResultSource,
+    },
     {
       path: "themeContext.ts",
       language: "ts",
@@ -37,4 +43,7 @@ export const useContextExample: ExampleDefinition = {
       source: ResultStylesSource,
     },
   ],
+  playground: {
+    entryFile: "result.tsx",
+  },
 };

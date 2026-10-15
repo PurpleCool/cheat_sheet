@@ -17,6 +17,7 @@ export const useRefExamples: ExampleDefinition[] = [
     notes: [
       "In development, React Strict Mode intentionally repeats lifecycle work. This example demonstrates that refs persist between renders rather than providing a production metric.",
     ],
+    playground: { entryFile: "result.tsx" },
   },
   {
     id: "previous-value",
@@ -25,6 +26,7 @@ export const useRefExamples: ExampleDefinition[] = [
     files: [
       { path: "result.tsx", language: "tsx", source: PreviousValueSource },
     ],
+    playground: { entryFile: "result.tsx" },
   },
   {
     id: "input-focus",
@@ -33,5 +35,6 @@ export const useRefExamples: ExampleDefinition[] = [
     files: [
       { path: "result.tsx", language: "tsx", source: InputFocusSource },
     ],
+    playground: { entryFile: "result.tsx" },
   },
 ];

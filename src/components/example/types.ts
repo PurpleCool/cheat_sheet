@@ -14,4 +14,7 @@ export interface ExampleDefinition {
   entry: ComponentType;
   files: ExampleSourceFile[];
   notes?: string[];
+  playground?: {
+    entryFile: string;
+  };
 }
