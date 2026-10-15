@@ -1,18 +1,14 @@
 import React from "react";
 
 import Codepen from "react-codepen-embed";
-import { Result } from "./result";
-import { Code } from "./code";
-import { ResultCodeTable } from "../../layout/resultCodeTable";
-import "./useContextPage.css";
+import { ExampleView } from "../../components/example";
+import { useContextExample } from "./example";
+import "../lessonPage.css";
 
 export default function UseContextPage() {
   return (
     <div className='page'>
-      <ResultCodeTable>
-        <Code />
-        <Result />
-      </ResultCodeTable>
+      <ExampleView example={useContextExample} />
       {/* <div className='divider'></div> */}
       <Codepen
         hash='gOzYVeV'

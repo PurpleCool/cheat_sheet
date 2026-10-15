@@ -3,8 +3,8 @@
 }
 
 .divider {
-  width: 100%;
-  height: 20px;
   border-bottom: 1px solid;
+  height: 20px;
   margin-bottom: 20px;
+  width: 100%;
 }
