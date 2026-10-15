@@ -1,4 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import {
+  type KeyboardEvent,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+} from "react";
 import Prism from "prismjs";
 import "prismjs/components/prism-typescript";
 import "prismjs/components/prism-jsx";
@@ -15,9 +21,46 @@ interface CodeViewerProps {
 
 export default function CodeViewer({ files, headingId, title }: CodeViewerProps) {
   const [activePath, setActivePath] = useState(files[0].path);
+  const tabsId = useId();
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const codeRef = useRef<HTMLElement>(null);
   const activeFile =
     files.find(({ path }) => path === activePath) ?? files[0];
+  const activeIndex = files.indexOf(activeFile);
+  const activeTabId = `${tabsId}-tab-${activeIndex}`;
+  const panelId = `${tabsId}-panel`;
+
+  const selectTab = (index: number) => {
+    setActivePath(files[index].path);
+    tabRefs.current[index]?.focus();
+  };
+
+  const handleTabKeyDown = (
+    event: KeyboardEvent<HTMLButtonElement>,
+    index: number,
+  ) => {
+    let nextIndex: number | undefined;
+
+    switch (event.key) {
+      case "ArrowLeft":
+        nextIndex = (index - 1 + files.length) % files.length;
+        break;
+      case "ArrowRight":
+        nextIndex = (index + 1) % files.length;
+        break;
+      case "Home":
+        nextIndex = 0;
+        break;
+      case "End":
+        nextIndex = files.length - 1;
+        break;
+    }
+
+    if (nextIndex !== undefined) {
+      event.preventDefault();
+      selectTab(nextIndex);
+    }
+  };
 
   useEffect(() => {
     if (codeRef.current) {
@@ -32,13 +75,20 @@ export default function CodeViewer({ files, headingId, title }: CodeViewerProps)
       </h2>
       {files.length > 1 && (
         <div className="code-tabs" role="tablist" aria-label="Source files">
-          {files.map(({ path }) => (
+          {files.map(({ path }, index) => (
             <button
+              aria-controls={panelId}
               aria-selected={path === activeFile.path}
               className="code-tab"
+              id={`${tabsId}-tab-${index}`}
               key={path}
               onClick={() => setActivePath(path)}
+              onKeyDown={(event) => handleTabKeyDown(event, index)}
+              ref={(element) => {
+                tabRefs.current[index] = element;
+              }}
               role="tab"
+              tabIndex={path === activeFile.path ? 0 : -1}
               type="button"
             >
               {path}
@@ -46,7 +96,12 @@ export default function CodeViewer({ files, headingId, title }: CodeViewerProps)
           ))}
         </div>
       )}
-      <pre>
+      <pre
+        aria-labelledby={files.length > 1 ? activeTabId : undefined}
+        id={files.length > 1 ? panelId : undefined}
+        role={files.length > 1 ? "tabpanel" : undefined}
+        tabIndex={files.length > 1 ? 0 : undefined}
+      >
         <code
           className={`language-${activeFile.language}`}
           data-source-path={activeFile.path}

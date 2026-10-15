@@ -12,7 +12,9 @@ export default function Result() {
 
   return (
     <div className="result">
+      <label htmlFor="previous-value-name">Name for previous value</label>
       <input
+        id="previous-value-name"
         value={name}
         onChange={(event) => setName(event.target.value)}
       />

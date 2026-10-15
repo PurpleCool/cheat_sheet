@@ -10,7 +10,9 @@ export default function Result() {
 
   return (
     <div className="result">
+      <label htmlFor="render-count-name">Name for render count</label>
       <input
+        id="render-count-name"
         value={name}
         onChange={(event) => setName(event.target.value)}
       />

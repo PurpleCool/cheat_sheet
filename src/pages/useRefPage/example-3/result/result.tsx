@@ -17,7 +17,9 @@ export default function Result() {
 
   return (
     <div className="result">
+      <label htmlFor="input-focus-name">Name to focus</label>
       <input
+        id="input-focus-name"
         ref={inputRef}
         value={name}
         onChange={(event) => setName(event.target.value)}
