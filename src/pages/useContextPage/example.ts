@@ -13,37 +13,31 @@ export const useContextExample: ExampleDefinition = {
   entry: Result,
   files: [
     {
-      group: "utils",
       path: "themeContext.ts",
       language: "ts",
       source: ThemeContextSource,
     },
     {
-      group: "parent",
       path: "contextParent.tsx",
       language: "tsx",
       source: ContextParentSource,
     },
     {
-      group: "children",
       path: "functionContextComponent.tsx",
       language: "tsx",
       source: FunctionContextComponentSource,
     },
     {
-      group: "children",
       path: "classContextComponent.tsx",
       language: "tsx",
       source: ClassContextComponentSource,
     },
     {
-      group: "root",
       path: "result.tsx",
       language: "tsx",
       source: ResultSource,
     },
     {
-      group: "root",
       path: "result.css",
       language: "css",
       source: ResultStylesSource,

@@ -15,30 +15,6 @@
   margin: 0.75rem 0;
 }
 
-.code-tab-group,
-.code-tab-group-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.code-tab-group {
-  align-items: center;
-  border-right: 1px solid #ccc;
-  padding-right: 0.5rem;
-}
-
-.code-tab-group:last-child {
-  border-right: 0;
-}
-
-.code-tab-group-label {
-  color: #555;
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-transform: uppercase;
-}
-
 .code-tab {
   background: #f2f2f2;
   border: 1px solid #aaa;
@@ -67,12 +43,6 @@
   margin-bottom: 0.75rem;
 }
 
-.source-structure ul {
-  list-style: none;
-  margin-bottom: 0;
-  padding-left: 0;
-}
-
 .source-structure-roots {
   display: grid;
   gap: 1rem;
@@ -87,13 +57,38 @@
 }
 
 .source-file-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
   margin-top: 0.35rem;
+}
+
+.source-file-button {
+  background: transparent;
+  border: 0;
+  color: #1756a9;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+  text-decoration: underline;
+}
+
+.source-file-button[aria-selected="true"] {
+  color: #111;
+  font-weight: 700;
+  text-decoration-thickness: 0.15em;
+}
+
+.source-file-button:focus-visible {
+  border-radius: 0.15rem;
+  outline: 2px solid #1756a9;
+  outline-offset: 2px;
 }
 
 .source-structure-children {
   border-left: 2px solid #aaa;
   margin-left: 1rem;
-  padding-left: 1rem !important;
+  padding-left: 1rem;
   padding-top: 0.75rem;
 }
 

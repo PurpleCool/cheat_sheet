@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { useContextExample } from "../../pages/useContextPage/example";
@@ -34,49 +34,65 @@ describe("ExampleView", () => {
     render(<ExampleView example={useContextExample} />);
 
     expect(screen.getByText("Suggested project structure")).toBeInTheDocument();
-    expect(screen.getByLabelText("root files")).toHaveTextContent(
-      "result.tsxresult.css",
-    );
-    expect(screen.getByLabelText("utils files")).toHaveTextContent(
-      "themeContext.ts",
-    );
-    expect(screen.getByLabelText("parent files")).toHaveTextContent(
-      "contextParent.tsx",
-    );
-    expect(screen.getByLabelText("children files")).toHaveTextContent(
-      "functionContextComponent.tsxclassContextComponent.tsx",
-    );
+    const root = screen
+      .getByText("root")
+      .closest<HTMLElement>(".source-structure-item");
+    const utils = screen
+      .getByText("utils")
+      .closest<HTMLElement>(".source-structure-item");
+
+    if (!root || !utils) {
+      throw new Error("Expected root and utils structure groups");
+    }
+
+    expect(within(root).getByRole("tab", { name: "result.tsx" })).toBeVisible();
+    expect(within(root).getByRole("tab", { name: "result.css" })).toBeVisible();
+    expect(
+      within(root).getByRole("tab", { name: "contextParent.tsx" }),
+    ).toBeVisible();
+    expect(
+      within(root).getByRole("tab", { name: "functionContextComponent.tsx" }),
+    ).toBeVisible();
+    expect(
+      within(root).getByRole("tab", { name: "classContextComponent.tsx" }),
+    ).toBeVisible();
+    expect(
+      within(utils).getByRole("tab", { name: "themeContext.ts" }),
+    ).toBeVisible();
+    expect(screen.getAllByRole("tab")).toHaveLength(6);
   });
 
   it("links tabs to the panel and supports keyboard navigation", async () => {
     const user = userEvent.setup();
     render(<ExampleView example={useContextExample} />);
 
-    const tabs = screen.getAllByRole("tab");
     const panel = screen.getByRole("tabpanel");
+    const themeTab = screen.getByRole("tab", { name: "themeContext.ts" });
+    const parentTab = screen.getByRole("tab", { name: "contextParent.tsx" });
+    const lastTab = screen.getByRole("tab", { name: "result.css" });
 
-    expect(tabs[0]).toHaveAttribute("aria-controls", panel.id);
-    expect(panel).toHaveAttribute("aria-labelledby", tabs[0].id);
-    expect(tabs[0]).toHaveAttribute("tabindex", "0");
-    expect(tabs[1]).toHaveAttribute("tabindex", "-1");
+    expect(themeTab).toHaveAttribute("aria-controls", panel.id);
+    expect(panel).toHaveAttribute("aria-labelledby", themeTab.id);
+    expect(themeTab).toHaveAttribute("tabindex", "0");
+    expect(parentTab).toHaveAttribute("tabindex", "-1");
 
-    tabs[0].focus();
+    themeTab.focus();
     await user.keyboard("{ArrowRight}");
-    expect(tabs[1]).toHaveFocus();
-    expect(tabs[1]).toHaveAttribute("aria-selected", "true");
-    expect(panel).toHaveAttribute("aria-labelledby", tabs[1].id);
+    expect(parentTab).toHaveFocus();
+    expect(parentTab).toHaveAttribute("aria-selected", "true");
+    expect(panel).toHaveAttribute("aria-labelledby", parentTab.id);
 
     await user.keyboard("{End}");
-    expect(tabs.at(-1)).toHaveFocus();
+    expect(lastTab).toHaveFocus();
 
     await user.keyboard("{ArrowRight}");
-    expect(tabs[0]).toHaveFocus();
+    expect(themeTab).toHaveFocus();
 
     await user.keyboard("{ArrowLeft}");
-    expect(tabs.at(-1)).toHaveFocus();
+    expect(lastTab).toHaveFocus();
 
     await user.keyboard("{Home}");
-    expect(tabs[0]).toHaveFocus();
+    expect(themeTab).toHaveFocus();
   });
 
   it("loads the editable playground only when requested", async () => {

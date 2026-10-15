@@ -3,7 +3,6 @@ import type { ComponentType } from "react";
 export type SourceLanguage = "css" | "ts" | "tsx";
 
 export interface ExampleSourceFile {
-  group?: string;
   path: string;
   language: SourceLanguage;
   source: string;
