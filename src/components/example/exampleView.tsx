@@ -1,6 +1,7 @@
 import { lazy, Suspense, useState } from "react";
 import { ResultCodeTable } from "../../layout/resultCodeTable";
 import CodeViewer from "./codeViewer";
+import SourceStructure from "./sourceStructure";
 import type { ExampleDefinition } from "./types";
 
 interface ExampleViewProps {
@@ -17,6 +18,9 @@ export default function ExampleView({ example }: ExampleViewProps) {
     <section className="example" aria-labelledby={`${example.id}-title`}>
       <ResultCodeTable>
         <div>
+          {example.sourceStructure && (
+            <SourceStructure groups={example.sourceStructure} />
+          )}
           <CodeViewer
             files={example.files}
             headingId={`${example.id}-title`}

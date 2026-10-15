@@ -13,9 +13,12 @@ describe("ExampleView", () => {
     const user = userEvent.setup();
     render(<ExampleView example={useContextExample} />);
 
-    const code = screen.getByRole("code");
-    expect(code).toHaveAttribute("data-source-path", "result.tsx");
-    expect(code).toHaveTextContent("ContextParent");
+    const code = screen.getByRole("tabpanel").querySelector("code");
+    if (!code) {
+      throw new Error("Expected the active source panel to contain code");
+    }
+    expect(code).toHaveAttribute("data-source-path", "themeContext.ts");
+    expect(code).toHaveTextContent("createContext");
 
     await user.click(screen.getByRole("tab", { name: "contextParent.tsx" }));
 
@@ -24,6 +27,24 @@ describe("ExampleView", () => {
       useContextExample.files.find(
         ({ path }) => path === "contextParent.tsx",
       )?.source,
+    );
+  });
+
+  it("shows the suggested useContext file hierarchy", () => {
+    render(<ExampleView example={useContextExample} />);
+
+    expect(screen.getByText("Suggested project structure")).toBeInTheDocument();
+    expect(screen.getByLabelText("root files")).toHaveTextContent(
+      "result.tsxresult.css",
+    );
+    expect(screen.getByLabelText("utils files")).toHaveTextContent(
+      "themeContext.ts",
+    );
+    expect(screen.getByLabelText("parent files")).toHaveTextContent(
+      "contextParent.tsx",
+    );
+    expect(screen.getByLabelText("children files")).toHaveTextContent(
+      "functionContextComponent.tsxclassContextComponent.tsx",
     );
   });
 

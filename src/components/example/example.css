@@ -15,6 +15,30 @@
   margin: 0.75rem 0;
 }
 
+.code-tab-group,
+.code-tab-group-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.code-tab-group {
+  align-items: center;
+  border-right: 1px solid #ccc;
+  padding-right: 0.5rem;
+}
+
+.code-tab-group:last-child {
+  border-right: 0;
+}
+
+.code-tab-group-label {
+  color: #555;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
 .code-tab {
   background: #f2f2f2;
   border: 1px solid #aaa;
@@ -31,6 +55,52 @@
 .example-note {
   max-width: 768px;
   padding: 0 20px;
+}
+
+.source-structure {
+  margin: 20px;
+  max-width: 728px;
+}
+
+.source-structure figcaption {
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.source-structure ul {
+  list-style: none;
+  margin-bottom: 0;
+  padding-left: 0;
+}
+
+.source-structure-roots {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.source-structure-node {
+  background: #f7f7f7;
+  border: 1px solid #aaa;
+  border-radius: 0.35rem;
+  padding: 0.65rem;
+}
+
+.source-file-list {
+  margin-top: 0.35rem;
+}
+
+.source-structure-children {
+  border-left: 2px solid #aaa;
+  margin-left: 1rem;
+  padding-left: 1rem !important;
+  padding-top: 0.75rem;
+}
+
+@media (max-width: 600px) {
+  .source-structure-roots {
+    grid-template-columns: 1fr;
+  }
 }
 
 .playground {

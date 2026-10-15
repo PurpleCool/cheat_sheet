@@ -29,6 +29,19 @@ export default function CodeViewer({ files, headingId, title }: CodeViewerProps)
   const activeIndex = files.indexOf(activeFile);
   const activeTabId = `${tabsId}-tab-${activeIndex}`;
   const panelId = `${tabsId}-panel`;
+  const fileGroups = files.reduce<
+    Array<{ files: Array<{ file: ExampleSourceFile; index: number }>; label?: string }>
+  >((groups, file, index) => {
+    const previousGroup = groups.at(-1);
+
+    if (previousGroup && previousGroup.label === file.group) {
+      previousGroup.files.push({ file, index });
+    } else {
+      groups.push({ label: file.group, files: [{ file, index }] });
+    }
+
+    return groups;
+  }, []);
 
   const selectTab = (index: number) => {
     setActivePath(files[index].path);
@@ -75,24 +88,31 @@ export default function CodeViewer({ files, headingId, title }: CodeViewerProps)
       </h2>
       {files.length > 1 && (
         <div className="code-tabs" role="tablist" aria-label="Source files">
-          {files.map(({ path }, index) => (
-            <button
-              aria-controls={panelId}
-              aria-selected={path === activeFile.path}
-              className="code-tab"
-              id={`${tabsId}-tab-${index}`}
-              key={path}
-              onClick={() => setActivePath(path)}
-              onKeyDown={(event) => handleTabKeyDown(event, index)}
-              ref={(element) => {
-                tabRefs.current[index] = element;
-              }}
-              role="tab"
-              tabIndex={path === activeFile.path ? 0 : -1}
-              type="button"
-            >
-              {path}
-            </button>
+          {fileGroups.map((group, groupIndex) => (
+            <div className="code-tab-group" key={group.label ?? groupIndex} role="presentation">
+              {group.label && <span className="code-tab-group-label">{group.label}</span>}
+              <div className="code-tab-group-buttons" role="presentation">
+                {group.files.map(({ file: { path }, index }) => (
+                  <button
+                    aria-controls={panelId}
+                    aria-selected={path === activeFile.path}
+                    className="code-tab"
+                    id={`${tabsId}-tab-${index}`}
+                    key={path}
+                    onClick={() => setActivePath(path)}
+                    onKeyDown={(event) => handleTabKeyDown(event, index)}
+                    ref={(element) => {
+                      tabRefs.current[index] = element;
+                    }}
+                    role="tab"
+                    tabIndex={path === activeFile.path ? 0 : -1}
+                    type="button"
+                  >
+                    {path}
+                  </button>
+                ))}
+              </div>
+            </div>
           ))}
         </div>
       )}

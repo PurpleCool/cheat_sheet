@@ -3,9 +3,16 @@ import type { ComponentType } from "react";
 export type SourceLanguage = "css" | "ts" | "tsx";
 
 export interface ExampleSourceFile {
+  group?: string;
   path: string;
   language: SourceLanguage;
   source: string;
+}
+
+export interface SourceStructureGroup {
+  children?: SourceStructureGroup[];
+  files: string[];
+  label: string;
 }
 
 export interface ExampleDefinition {
@@ -17,4 +24,5 @@ export interface ExampleDefinition {
   playground?: {
     entryFile: string;
   };
+  sourceStructure?: SourceStructureGroup[];
 }
