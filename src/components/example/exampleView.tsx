@@ -11,7 +11,14 @@ export default function ExampleView({ example }: ExampleViewProps) {
 
   return (
     <ResultCodeTable>
-      <CodeViewer files={example.files} title={example.title} />
+      <div>
+        <CodeViewer files={example.files} title={example.title} />
+        {example.notes?.map((note) => (
+          <p className="example-note" key={note}>
+            {note}
+          </p>
+        ))}
+      </div>
       <Result />
     </ResultCodeTable>
   );

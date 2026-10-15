@@ -27,3 +27,8 @@
   background: #333;
   color: #fff;
 }
+
+.example-note {
+  max-width: 768px;
+  padding: 0 20px;
+}

@@ -14,6 +14,9 @@ export const useRefExamples: ExampleDefinition[] = [
     files: [
       { path: "result.tsx", language: "tsx", source: RenderCountSource },
     ],
+    notes: [
+      "In development, React Strict Mode intentionally repeats lifecycle work. This example demonstrates that refs persist between renders rather than providing a production metric.",
+    ],
   },
   {
     id: "previous-value",

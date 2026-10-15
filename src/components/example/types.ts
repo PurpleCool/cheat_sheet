@@ -13,4 +13,5 @@ export interface ExampleDefinition {
   title: string;
   entry: ComponentType;
   files: ExampleSourceFile[];
+  notes?: string[];
 }
