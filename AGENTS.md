@@ -14,7 +14,7 @@ This is a React 19 and TypeScript learning application built with Vite and Yarn 
 1. **Implementation:** an implementation agent makes the scoped change and adds meaningful tests where appropriate.
 2. **Independent code review:** a different, read-only Reviewer examines the full diff against the correct base. Use `$review-loop` when iterative review and fixes are requested.
 3. **Review/fix loop:** the implementation agent fixes substantiated findings; an independent Reviewer checks the updated full diff. Keep the iteration limit and unresolved findings visible as defined by the review skill.
-4. **Human walkthrough:** use `$pr-walkthrough` for an interactive, read-only explanation of the architecture and trade-offs. Walkthrough is not review or approval.
+4. **Human walkthrough:** use `$pr-walkthrough` to discuss one semantic block at a time. Discussion is read-only; explicit approval of concrete changes authorizes their scoped implementation, independent review, verification, and local commits. Detailed approval and progress rules live in the skill; final PR acceptance remains human.
 5. **Verification:** run `corepack yarn typecheck`, `corepack yarn test`, and `corepack yarn build`; add focused smoke checks when the change warrants them. Never claim an unexecuted check passed.
 6. **Human approval:** only the human decides whether changes are accepted and merged.
 
