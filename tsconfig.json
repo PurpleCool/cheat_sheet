@@ -23,7 +23,10 @@
       "vitest/globals"
     ]
   },
+  // TODO: Split browser/Node.js configs if additional Node.js app code or standalone scripts
+  // are added, so Node tooling is checked without DOM globals.
   "include": [
-    "src"
+    "src",
+    "vite.config.ts"
   ]
 }
