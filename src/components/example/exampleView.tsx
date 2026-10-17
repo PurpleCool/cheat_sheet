@@ -7,6 +7,8 @@ interface ExampleViewProps {
   example: ExampleDefinition;
 }
 
+// TODO: Profile the first playground opening on slow networks and devices
+// before deciding how to optimize the large Sandpack chunk.
 const SandpackPlayground = lazy(() => import("./sandpackPlayground"));
 
 export default function ExampleView({ example }: ExampleViewProps) {
