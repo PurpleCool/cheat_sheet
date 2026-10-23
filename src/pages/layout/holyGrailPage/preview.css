@@ -1,0 +1,13 @@
+.holy-grail-preview {
+  flex: 1 1 600px;
+  max-width: 768px;
+  min-width: 0;
+  padding: 20px;
+}
+
+.holy-grail-preview iframe {
+  border: 1px solid #aaa;
+  display: block;
+  height: 480px;
+  width: 100%;
+}

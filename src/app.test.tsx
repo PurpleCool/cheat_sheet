@@ -7,6 +7,27 @@ import { buildPageRegistry } from "./pageRegistry/buildPageRegistry";
 import { pageModules } from "./pageRegistry/registry";
 
 describe("App routing", () => {
+  it("discovers Holy Grail and its active Layout group from its page descriptor", async () => {
+    const user = userEvent.setup();
+    render(
+      <MemoryRouter initialEntries={["/layout/holy-grail"]}>
+        <App />
+      </MemoryRouter>,
+    );
+
+    expect(screen.getByRole("heading", { name: "Holy Grail" })).toBeVisible();
+    const layout = screen.getByRole("button", { name: "Layout" });
+    expect(layout).toHaveClass("active");
+    expect(screen.getByRole("button", { name: "Hooks" })).not.toHaveClass("active");
+    expect(screen.getByRole("button", { name: "Useful" })).not.toHaveClass("active");
+    await user.click(layout);
+    const link = screen.getByRole("link", { name: "Holy Grail" });
+    expect(link).toHaveAttribute("href", "/layout/holy-grail");
+    expect(link).toHaveAttribute("aria-current", "page");
+    expect(link).toHaveClass("active");
+    expect(link).toHaveAttribute("aria-selected", "true");
+  });
+
   it("discovers the direct Debounce route and Useful group from its page descriptor", async () => {
     const user = userEvent.setup();
     render(
