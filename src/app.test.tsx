@@ -7,6 +7,29 @@ import { buildPageRegistry } from "./pageRegistry/buildPageRegistry";
 import { pageModules } from "./pageRegistry/registry";
 
 describe("App routing", () => {
+  it("discovers the direct Tabs route and active UI group", async () => {
+    const user = userEvent.setup();
+    render(<MemoryRouter initialEntries={["/ui/tabs"]}><App /></MemoryRouter>);
+
+    expect(screen.getByRole("heading", { name: "Tabs" })).toBeVisible();
+    const ui = screen.getByRole("button", { name: "UI" });
+    expect(ui).toHaveClass("active");
+    expect(screen.getByRole("button", { name: "Hooks" })).not.toHaveClass("active");
+    await user.click(ui);
+    const link = screen.getByRole("link", { name: "Tabs" });
+    expect(link).toHaveAttribute("href", "/ui/tabs");
+    expect(link).toHaveAttribute("aria-current", "page");
+
+    await user.click(screen.getByRole("link", { name: "Home" }));
+    expect(screen.getByRole("heading", { name: "React Cheat Sheet" })).toBeVisible();
+    expect(ui).not.toHaveClass("active");
+    await user.click(ui);
+    await user.click(screen.getByRole("link", { name: "Tabs" }));
+    expect(screen.getByRole("heading", { name: "Tabs" })).toBeVisible();
+    expect(ui).toHaveClass("active");
+    expect(ui).toHaveAttribute("aria-expanded", "false");
+  });
+
   it("discovers Holy Grail and its active Layout group from its page descriptor", async () => {
     const user = userEvent.setup();
     render(

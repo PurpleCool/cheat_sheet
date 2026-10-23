@@ -9,6 +9,19 @@ function page(title: string, path: PageDefinition["path"]): PageDefinition {
 const home = { "../pages/home/page.ts": page("Home", "/") };
 
 describe("buildPageRegistry", () => {
+  it("uses the UI acronym for the ui directory group", () => {
+    const registry = buildPageRegistry({
+      ...home,
+      "../pages/ui/tabsPage/page.ts": page("Tabs", "/ui/tabs"),
+    });
+
+    expect(registry.navigation).toEqual([{
+      kind: "group", id: "group:ui", title: "UI", children: [{
+        kind: "page", id: "page:ui/tabsPage", title: "Tabs", path: "/ui/tabs",
+      }],
+    }]);
+  });
+
   it("orders pages and navigation by entry path with stable unique IDs", () => {
     const modules = {
       "../pages/zPage/page.ts": page("Z", "/z"),
