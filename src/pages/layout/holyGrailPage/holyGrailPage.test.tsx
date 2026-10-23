@@ -73,6 +73,71 @@ describe("Holy Grail page", () => {
 });
 
 describe("Holy Grail isolated preview", () => {
+  it("labels native size ranges and starts with a 600 by 480 pixel viewport", () => {
+    render(<Result />);
+    const width = screen.getByRole("slider", { name: "Ширина" });
+    const height = screen.getByRole("slider", { name: "Высота" });
+    expect(screen.getAllByRole("slider")).toHaveLength(2);
+    expect(screen.getByLabelText("Ширина")).toBe(width);
+    expect(screen.getByLabelText("Высота")).toBe(height);
+    expect(width).toHaveAttribute("type", "range");
+    expect(width).toHaveAttribute("min", "240");
+    expect(width).toHaveAttribute("max", "1200");
+    expect(width).toHaveValue("600");
+    expect(height).toHaveAttribute("type", "range");
+    expect(height).toHaveAttribute("min", "200");
+    expect(height).toHaveAttribute("max", "900");
+    expect(height).toHaveValue("480");
+    expect(screen.getByText("600px")).toBeVisible();
+    expect(screen.getByText("480px")).toBeVisible();
+    expect(screen.getByTitle("Holy Grail layout preview")).toHaveStyle({ width: "600px", height: "480px" });
+  });
+
+  it("resizes each viewport dimension independently without replacing the frame or portal", () => {
+    render(<Result />);
+    const frame = screen.getByTitle<HTMLIFrameElement>("Holy Grail layout preview");
+    fireEvent.load(frame);
+    const previewDocument = frame.srcdoc;
+    const body = frame.contentDocument!.body;
+    const portalNodes = Array.from(body.childNodes);
+    const main = within(body).getByRole("main");
+    // A live DOM change makes a portal reset observable as well as node replacement.
+    main.textContent = "Preview state survives resize";
+    const load = vi.fn();
+    frame.addEventListener("load", load);
+
+    const expectStablePreview = () => {
+      expect(screen.getByTitle("Holy Grail layout preview")).toBe(frame);
+      expect(frame.srcdoc).toBe(previewDocument);
+      expect(frame).toHaveAttribute("sandbox", "allow-same-origin");
+      expect(frame.contentDocument!.body).toBe(body);
+      expect(body.childNodes).toHaveLength(portalNodes.length);
+      portalNodes.forEach((node, index) => expect(body.childNodes[index]).toBe(node));
+      expect(within(body).getByRole("main")).toBe(main);
+      expect(main).toHaveTextContent("Preview state survives resize");
+      expect(body.querySelector("style")!.textContent).toBe(stylesSource);
+      expect(load).not.toHaveBeenCalled();
+    };
+
+    for (const width of [1200, 240]) {
+      fireEvent.change(screen.getByLabelText("Ширина"), { target: { value: String(width) } });
+      expect(frame).toHaveStyle({ width: `${width}px`, height: "480px" });
+      expect(screen.getByLabelText("Ширина")).toHaveValue(String(width));
+      expect(screen.getByLabelText("Высота")).toHaveValue("480");
+      expect(screen.getByText(`${width}px`)).toBeVisible();
+      expectStablePreview();
+    }
+
+    for (const height of [900, 200]) {
+      fireEvent.change(screen.getByLabelText("Высота"), { target: { value: String(height) } });
+      expect(frame).toHaveStyle({ width: "240px", height: `${height}px` });
+      expect(screen.getByLabelText("Ширина")).toHaveValue("240");
+      expect(screen.getByLabelText("Высота")).toHaveValue(String(height));
+      expect(screen.getByText(`${height}px`)).toBeVisible();
+      expectStablePreview();
+    }
+  });
+
   it("portals the original app and exact stylesheet only into the loaded iframe", () => {
     const { container } = render(<Result />);
     const frame = screen.getByTitle<HTMLIFrameElement>("Holy Grail layout preview");
