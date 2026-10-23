@@ -17,6 +17,23 @@ export default function ExampleView({ example }: ExampleViewProps) {
 
   return (
     <section className="example" aria-labelledby={`${example.id}-title`}>
+      {example.exercise && (
+        <div className="example-note">
+          <p>
+            <a
+              href={example.exercise.sourceUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {example.exercise.sourceLabel}
+            </a>
+          </p>
+          <details>
+            <summary>Условие задачи</summary>
+            {example.exercise.statement}
+          </details>
+        </div>
+      )}
       <ResultCodeTable>
         <div>
           <CodeViewer

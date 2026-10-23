@@ -1,4 +1,4 @@
-import type { ComponentType } from "react";
+import type { ComponentType, ReactNode } from "react";
 
 export type SourceLanguage = "css" | "ts" | "tsx";
 
@@ -19,6 +19,11 @@ export interface ExampleDefinition {
   title: string;
   entry: ComponentType;
   files: ExampleSourceFile[];
+  exercise?: {
+    sourceUrl: string;
+    sourceLabel: string;
+    statement: ReactNode;
+  };
   notes?: string[];
   playground?: {
     entryFile: string;

@@ -7,6 +7,26 @@ import { buildPageRegistry } from "./pageRegistry/buildPageRegistry";
 import { pageModules } from "./pageRegistry/registry";
 
 describe("App routing", () => {
+  it("discovers the direct Debounce route and Useful group from its page descriptor", async () => {
+    const user = userEvent.setup();
+    render(
+      <MemoryRouter initialEntries={["/useful/debounce"]}>
+        <App />
+      </MemoryRouter>,
+    );
+
+    expect(screen.getByRole("heading", { name: "Debounce" })).toBeInTheDocument();
+    const useful = screen.getByRole("button", { name: "Useful" });
+    expect(useful).toHaveClass("active");
+    expect(screen.getByRole("button", { name: "Hooks" })).not.toHaveClass("active");
+    await user.click(useful);
+    const link = screen.getByRole("link", { name: "Debounce" });
+    expect(link).toHaveAttribute("href", "/useful/debounce");
+    expect(link).toHaveAttribute("aria-current", "page");
+    expect(link).toHaveClass("active");
+    expect(link).toHaveAttribute("aria-selected", "true");
+  });
+
   it.each([
     ["/useContext", "useContext", "Sharing theme state with useContext"],
     ["/useRef", "useRef", "Counting renders with useRef"],
