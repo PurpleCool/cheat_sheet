@@ -1,8 +1,8 @@
 import React from "react";
 
-import { ExampleView } from "../../components/example";
+import { ExampleView } from "../../../components/example";
 import { useRefExamples } from "./examples";
-import "../lessonPage.css";
+import "../../lessonPage.css";
 
 export default function UseRefPage() {
   return (

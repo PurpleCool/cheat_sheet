@@ -1,4 +1,4 @@
-import type { ExampleDefinition } from "../../components/example";
+import type { ExampleDefinition } from "../../../components/example";
 import RenderCountResult from "./example-1/result/result";
 import RenderCountSource from "./example-1/result/result.tsx?raw";
 import PreviousValueResult from "./example-2/result/result";

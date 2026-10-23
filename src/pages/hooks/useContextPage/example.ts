@@ -1,4 +1,4 @@
-import type { ExampleDefinition } from "../../components/example";
+import type { ExampleDefinition } from "../../../components/example";
 import ClassContextComponentSource from "./result/classContextComponent.tsx?raw";
 import ContextParentSource from "./result/contextParent.tsx?raw";
 import FunctionContextComponentSource from "./result/functionContextComponent.tsx?raw";
