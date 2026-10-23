@@ -19,8 +19,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "types": [
-      "vite/client",
-      "vitest/globals"
+      "vite/client"
     ]
   },
   // TODO: Split browser/Node.js configs if additional Node.js app code or standalone scripts
