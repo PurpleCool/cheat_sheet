@@ -1,19 +1,19 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { Navigation } from "./components/navigation";
-import { paths } from "./constants";
-import { Home } from "./pages/home";
-import { UseContextPage } from "./pages/useContextPage";
-import { UseRefPage } from "./pages/useRefPage";
+import { pageRegistry } from "./pageRegistry/registry";
+import type { PageRegistry } from "./pageRegistry/types";
 
-export default function App() {
+export default function App({
+  registry = pageRegistry,
+}: { registry?: PageRegistry }) {
   return (
     <>
-      <Navigation />
+      <Navigation registry={registry} />
       <Routes>
-        <Route index element={<Home />} />
-        <Route path={paths.useContext} element={<UseContextPage />} />
-        <Route path={paths.useRef} element={<UseRefPage />} />
-        <Route path="*" element={<Navigate to={paths.home} replace />} />
+        {registry.pages.map(({ id, path, component: Page }) => (
+          <Route key={id} path={path} element={<Page />} />
+        ))}
+        <Route path="*" element={<Navigate to={registry.home.path} replace />} />
       </Routes>
     </>
   );

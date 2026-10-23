@@ -66,3 +66,44 @@ then register both sides in an `ExampleDefinition`. Do not create a separate
 string copy of the source. Set `playground.entryFile` to expose the same files
 in Sandpack. The playground is loaded only after the user opens it and requires
 network access to the CodeSandbox bundler runtime.
+
+## Adding a page
+
+Create a component, for example `src/pages/fetchPage/fetchPage.tsx`, and add
+`src/pages/fetchPage/page.ts`:
+
+```ts
+import type { PageDefinition } from "../../pageRegistry/types";
+import FetchPage from "./fetchPage";
+
+export default {
+  title: "Fetch",
+  path: "/fetch",
+  component: FetchPage,
+} satisfies PageDefinition;
+```
+
+Only `src/pages/**/page.ts` default exports register pages. `index.ts`, examples,
+results, tests and CSS without that exact marker are ignored. The eager Vite
+glob in `src/pageRegistry/registry.ts` supplies both routes and header navigation;
+no edits to App or Navigation are needed. Sandpack remains loaded on demand.
+
+A directory with a page marker becomes a link. A directory without a marker
+but with descendant pages becomes a dropdown, with its directory name used as
+the label (`hooks` → `Hooks`). Deeper groups appear as labelled sections in the
+same dropdown; all links work with clicks and the keyboard. A directory cannot
+have both its own marker and child pages: the registry throws an error naming
+that directory. Move the parent page into a separate child directory instead.
+Pages and groups are ordered by relative marker path, with IDs derived from the
+full directory path.
+
+URLs come from descriptors, independently of folders: the moved hook lessons
+keep `/useContext` and `/useRef`. Use absolute static paths with letters, digits,
+hyphens or underscores in each segment, without trailing slashes. Duplicate
+paths, including case-only differences, are rejected. Exactly one page must use
+`/`; it supplies the Home brand link and is omitted from the rest of the menu.
+Unknown URLs redirect to `/`.
+
+Page discovery happens in Vite, so production needs a new build to include an
+added, moved or removed page. The Fetch example above is an authoring example;
+no placeholder Fetch page is shipped.

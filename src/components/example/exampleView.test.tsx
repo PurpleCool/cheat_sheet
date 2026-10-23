@@ -1,8 +1,8 @@
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
-import { useContextExample } from "../../pages/useContextPage/example";
-import { useRefExamples } from "../../pages/useRefPage/examples";
+import { useContextExample } from "../../pages/hooks/useContextPage/example";
+import { useRefExamples } from "../../pages/hooks/useRefPage/examples";
 import ExampleView from "./exampleView";
 import type { ExampleDefinition } from "./types";
 

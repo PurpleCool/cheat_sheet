@@ -3,9 +3,34 @@ import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { describe, expect, it } from "vitest";
 import App from "./app";
+import { buildPageRegistry } from "./pageRegistry/buildPageRegistry";
+import { pageModules } from "./pageRegistry/registry";
 
 describe("App routing", () => {
-  it("renders direct lesson routes and navigates without reloading", async () => {
+  it.each([
+    ["/useContext", "useContext", "Sharing theme state with useContext"],
+    ["/useRef", "useRef", "Counting renders with useRef"],
+  ])("renders direct %s with the active lesson and group", async (path, title, heading) => {
+    const user = userEvent.setup();
+    render(
+      <MemoryRouter initialEntries={[path]}>
+        <App />
+      </MemoryRouter>,
+    );
+
+    expect(screen.getByRole("heading", { name: heading })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Hooks" })).toHaveClass("active");
+    expect(screen.getByRole("link", { name: "Home" })).not.toHaveAttribute("aria-current");
+
+    await user.click(screen.getByRole("button", { name: "Hooks" }));
+
+    expect(screen.getByRole("link", { name: title })).toHaveAttribute("aria-current", "page");
+    expect(screen.getByRole("link", { name: title })).toHaveAttribute("href", path);
+    expect(screen.getByRole("link", { name: title })).toHaveClass("active");
+    expect(screen.getByRole("link", { name: title })).toHaveAttribute("aria-selected", "true");
+  });
+
+  it("switches lessons and home, updating active links without reloading", async () => {
     const user = userEvent.setup();
     render(
       <MemoryRouter initialEntries={["/useContext"]}>
@@ -13,17 +38,35 @@ describe("App routing", () => {
       </MemoryRouter>,
     );
 
-    expect(
-      screen.getByRole("heading", {
-        name: "Sharing theme state with useContext",
-      }),
-    ).toBeInTheDocument();
+    const hooks = screen.getByRole("button", { name: "Hooks" });
+    await user.click(hooks);
+    await user.click(screen.getByRole("link", { name: "useRef" }));
+
+    expect(screen.getByRole("heading", { name: "Counting renders with useRef" })).toBeInTheDocument();
+    expect(hooks).toHaveAttribute("aria-expanded", "false");
+
+    await user.click(hooks);
+    expect(screen.getByRole("link", { name: "useRef" })).toHaveAttribute("aria-current", "page");
+    expect(screen.getByRole("link", { name: "useRef" })).toHaveClass("active");
+    expect(screen.getByRole("link", { name: "useRef" })).toHaveAttribute("aria-selected", "true");
+    expect(screen.getByRole("link", { name: "useContext" })).not.toHaveAttribute("aria-current");
+    expect(screen.getByRole("link", { name: "useContext" })).not.toHaveClass("active");
+    expect(screen.getByRole("link", { name: "useContext" })).toHaveAttribute("aria-selected", "false");
+    await user.click(hooks);
 
     await user.click(screen.getByRole("link", { name: "Home" }));
 
     expect(
       screen.getByRole("heading", { name: "React Cheat Sheet" }),
     ).toBeInTheDocument();
+    expect(screen.getAllByRole("link", { name: "Home" })).toHaveLength(1);
+    expect(screen.getByRole("link", { name: "Home" })).toHaveAttribute("aria-current", "page");
+    expect(hooks).not.toHaveClass("active");
+
+    await user.click(hooks);
+    expect(screen.getByRole("link", { name: "useRef" })).not.toHaveAttribute("aria-current");
+    expect(screen.getByRole("link", { name: "useRef" })).not.toHaveClass("active");
+    expect(screen.getByRole("link", { name: "useRef" })).toHaveAttribute("aria-selected", "false");
   });
 
   it("redirects unknown routes to home", async () => {
@@ -36,5 +79,42 @@ describe("App routing", () => {
     expect(
       await screen.findByRole("heading", { name: "React Cheat Sheet" }),
     ).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Home" })).toHaveAttribute("aria-current", "page");
+  });
+
+  it("adds a future root page to both header and routes from injected modules alone", async () => {
+    const user = userEvent.setup();
+    const registry = buildPageRegistry({
+      ...pageModules,
+      "../pages/fetchPage/page.ts": {
+        title: "Fetch",
+        path: "/fetch",
+        component: () => <h1>Fetch lesson</h1>,
+      },
+    });
+    render(
+      <MemoryRouter>
+        <App registry={registry} />
+      </MemoryRouter>,
+    );
+
+    const fetch = screen.getByRole("link", { name: "Fetch" });
+    expect(fetch).toHaveAttribute("href", "/fetch");
+    expect(fetch).not.toHaveAttribute("aria-current");
+    expect(fetch).not.toHaveClass("active");
+    expect(fetch).not.toHaveAttribute("aria-selected");
+    await user.click(fetch);
+
+    expect(screen.getByRole("heading", { name: "Fetch lesson" })).toBeInTheDocument();
+    expect(fetch).toHaveAttribute("aria-current", "page");
+    expect(fetch).toHaveClass("active");
+    expect(fetch).not.toHaveAttribute("aria-selected");
+    expect(screen.getByRole("button", { name: "Hooks" })).not.toHaveClass("active");
+
+    await user.click(screen.getByRole("link", { name: "Home" }));
+    expect(screen.getByRole("heading", { name: "React Cheat Sheet" })).toBeInTheDocument();
+    expect(fetch).not.toHaveAttribute("aria-current");
+    expect(fetch).not.toHaveClass("active");
+    expect(fetch).not.toHaveAttribute("aria-selected");
   });
 });
