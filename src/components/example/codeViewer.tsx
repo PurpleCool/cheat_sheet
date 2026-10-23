@@ -43,28 +43,34 @@ export default function CodeViewer({
 
   const handleTabKeyDown = (
     event: KeyboardEvent<HTMLButtonElement>,
-    index: number,
   ) => {
+    const tabList = event.currentTarget.closest('[role="tablist"]');
+    if (!tabList) return;
+
+    const tabs = Array.from(
+      tabList.querySelectorAll<HTMLButtonElement>('[role="tab"]'),
+    );
+    const index = tabs.indexOf(event.currentTarget);
     let nextIndex: number | undefined;
 
     switch (event.key) {
       case "ArrowLeft":
-        nextIndex = (index - 1 + files.length) % files.length;
+        nextIndex = (index - 1 + tabs.length) % tabs.length;
         break;
       case "ArrowRight":
-        nextIndex = (index + 1) % files.length;
+        nextIndex = (index + 1) % tabs.length;
         break;
       case "Home":
         nextIndex = 0;
         break;
       case "End":
-        nextIndex = files.length - 1;
+        nextIndex = tabs.length - 1;
         break;
     }
 
     if (nextIndex !== undefined) {
       event.preventDefault();
-      selectTab(nextIndex);
+      selectTab(tabRefs.current.indexOf(tabs[nextIndex]));
     }
   };
 
@@ -102,7 +108,7 @@ export default function CodeViewer({
               id={`${tabsId}-tab-${index}`}
               key={path}
               onClick={() => selectTab(index)}
-              onKeyDown={(event) => handleTabKeyDown(event, index)}
+              onKeyDown={handleTabKeyDown}
               ref={(element) => {
                 tabRefs.current[index] = element;
               }}

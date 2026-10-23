@@ -2,11 +2,35 @@ import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { useContextExample } from "../../pages/useContextPage/example";
+import { useRefExamples } from "../../pages/useRefPage/examples";
 import ExampleView from "./exampleView";
+import type { ExampleDefinition } from "./types";
 
 vi.mock("./sandpackPlayground", () => ({
   default: () => <div data-testid="sandpack-playground" />,
 }));
+
+function expectActiveTab(tab: HTMLElement, example: ExampleDefinition) {
+  const panel = screen.getByRole("tabpanel");
+  const file = example.files.find(({ path }) => path === tab.textContent);
+  if (!file) {
+    throw new Error(`Expected a source file for tab ${tab.textContent}`);
+  }
+
+  expect(tab).toHaveFocus();
+  for (const otherTab of screen.getAllByRole("tab")) {
+    expect(otherTab).toHaveAttribute("aria-controls", panel.id);
+    expect(otherTab).toHaveAttribute("aria-selected", String(otherTab === tab));
+    expect(otherTab).toHaveAttribute("tabindex", otherTab === tab ? "0" : "-1");
+  }
+  expect(panel).toHaveAttribute("aria-labelledby", tab.id);
+  expect(panel).toHaveAttribute("tabindex", "0");
+  expect(panel.querySelector("code")).toHaveAttribute(
+    "data-source-path",
+    file.path,
+  );
+  expect(panel.querySelector("code")?.textContent).toBe(file.source);
+}
 
 describe("ExampleView", () => {
   it("renders and switches between raw source files", async () => {
@@ -62,37 +86,71 @@ describe("ExampleView", () => {
     expect(screen.getAllByRole("tab")).toHaveLength(6);
   });
 
-  it("links tabs to the panel and supports keyboard navigation", async () => {
-    const user = userEvent.setup();
-    render(<ExampleView example={useContextExample} />);
+  describe.each([
+    {
+      name: "useContext source tree",
+      example: useContextExample,
+      paths: [
+        "result.tsx",
+        "result.css",
+        "contextParent.tsx",
+        "functionContextComponent.tsx",
+        "classContextComponent.tsx",
+        "themeContext.ts",
+      ],
+    },
+    {
+      name: "flat useRef tabs",
+      example: {
+        ...useRefExamples[0],
+        files: useRefExamples.map(({ id, files }) => ({
+          ...files[0],
+          path: `${id}/result.tsx`,
+        })),
+      },
+      paths: [
+        "render-count/result.tsx",
+        "previous-value/result.tsx",
+        "input-focus/result.tsx",
+      ],
+    },
+  ])("keyboard navigation for $name", ({ example, paths }) => {
+    it.each(["Home", "End"])("selects the DOM boundary with %s", async (key) => {
+      const user = userEvent.setup();
+      render(<ExampleView example={example} />);
 
-    const panel = screen.getByRole("tabpanel");
-    const themeTab = screen.getByRole("tab", { name: "themeContext.ts" });
-    const parentTab = screen.getByRole("tab", { name: "contextParent.tsx" });
-    const lastTab = screen.getByRole("tab", { name: "result.css" });
+      const tabs = screen.getAllByRole("tab");
+      expect(tabs.map((tab) => tab.textContent)).toEqual(paths);
+      await user.tab();
+      expectActiveTab(screen.getByRole("tab", { selected: true }), example);
 
-    expect(themeTab).toHaveAttribute("aria-controls", panel.id);
-    expect(panel).toHaveAttribute("aria-labelledby", themeTab.id);
-    expect(themeTab).toHaveAttribute("tabindex", "0");
-    expect(parentTab).toHaveAttribute("tabindex", "-1");
+      await user.click(tabs[1]);
+      expectActiveTab(tabs[1], example);
+      await user.keyboard(`{${key}}`);
 
-    themeTab.focus();
-    await user.keyboard("{ArrowRight}");
-    expect(parentTab).toHaveFocus();
-    expect(parentTab).toHaveAttribute("aria-selected", "true");
-    expect(panel).toHaveAttribute("aria-labelledby", parentTab.id);
+      expectActiveTab(key === "Home" ? tabs[0] : tabs[tabs.length - 1], example);
+    });
 
-    await user.keyboard("{End}");
-    expect(lastTab).toHaveFocus();
+    it.each([
+      { key: "ArrowRight", step: 1 },
+      { key: "ArrowLeft", step: -1 },
+    ])("traverses every DOM tab and wraps with $key", async ({ key, step }) => {
+      const user = userEvent.setup();
+      render(<ExampleView example={example} />);
 
-    await user.keyboard("{ArrowRight}");
-    expect(themeTab).toHaveFocus();
+      const tabs = screen.getAllByRole("tab");
+      expect(tabs.map((tab) => tab.textContent)).toEqual(paths);
+      const initialTab = screen.getByRole("tab", { name: example.files[0].path });
+      await user.tab();
+      expectActiveTab(initialTab, example);
+      let index = tabs.indexOf(initialTab);
 
-    await user.keyboard("{ArrowLeft}");
-    expect(lastTab).toHaveFocus();
-
-    await user.keyboard("{Home}");
-    expect(themeTab).toHaveFocus();
+      for (let count = 0; count < tabs.length; count += 1) {
+        index = (index + step + tabs.length) % tabs.length;
+        await user.keyboard(`{${key}}`);
+        expectActiveTab(tabs[index], example);
+      }
+    });
   });
 
   it("loads the editable playground only when requested", async () => {
