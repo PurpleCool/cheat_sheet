@@ -15,25 +15,84 @@ export const debounceExample: ExampleDefinition = {
     sourceUrl: "https://www.greatfrontend.com/questions/javascript/debounce",
     sourceLabel: "Источник: GreatFrontEnd — Debounce",
     statement: (
-      <>
-        <p>Пересказ условия.</p>
+      <div lang="en">
         <p>
-          Реализуйте debounce(func, wait), возвращающую функцию-обёртку. При
-          обращении к обёртке func не срабатывает сразу: вызов происходит после
-          wait миллисекунд без новых обращений. Повторное обращение перезапускает
-          ожидание; func получает аргументы и this последнего обращения.
+          Debouncing controls how often a function can execute over time. When a
+          JavaScript function is debounced with a wait time of <code>wait</code>{" "}
+          milliseconds, it runs only after <code>wait</code> milliseconds have
+          elapsed since the debounced function was last called.
         </p>
         <p>
-          func — исходная функция, wait — задержка в миллисекундах. Вызов обёртки
-          не возвращает результат отложенного func. Например, при задержке 100 мс
-          и обращениях в 0 и 50 мс func сработает один раз, не раньше 150 мс.
+          You have probably encountered debouncing in daily life before, such as
+          when entering an elevator. Only after some time passes without pressing
+          the &quot;Door open&quot; button (the debounced function not being called)
+          will the elevator door actually close (the callback function is
+          executed).
         </p>
         <p>
-          Расширение: cancel() отменяет ожидающий вызов; flush() выполняет его
-          немедленно ровно один раз. Если ожидающего вызова нет, оба метода ничего
-          не делают. Новые обращения работают и после cancel()/flush().
+          Implement <code>debounce(func, wait)</code> so that <code>func</code> is
+          called only after <code>wait</code> milliseconds have passed since the
+          most recent call. The returned function should not invoke{" "}
+          <code>func</code> immediately. When the delayed call finally runs, it
+          should use the latest arguments and preserve the <code>this</code> value
+          from the most recent call.
         </p>
-      </>
+        <h3>Arguments</h3>
+        <ul>
+          <li><code>func</code> (Function): The callback to debounce.</li>
+          <li>
+            <code>wait</code> (number): The number of milliseconds to wait after the
+            latest call.
+          </li>
+        </ul>
+        <h3>Returns</h3>
+        <p>(Function): Returns the debounced function.</p>
+        <h3>Examples</h3>
+        <pre className="exercise-code"><code>{`let i = 0;
+function increment() {
+  i++;
+}
+const debouncedIncrement = debounce(increment, 100);
+
+// t = 0: Call debouncedIncrement().
+debouncedIncrement(); // i = 0
+
+// t = 50: i is still 0 because 100ms have not passed.
+
+// t = 100: increment() was invoked and i is now 1.`}</code></pre>
+        <p><code>debouncedIncrement()</code> is called multiple times.</p>
+        <pre className="exercise-code"><code>{`let i = 0;
+function increment() {
+  i++;
+}
+const debouncedIncrement = debounce(increment, 100);
+
+// t = 0: Call debouncedIncrement().
+debouncedIncrement(); // i = 0
+
+// t = 50: i is still 0 because 100ms have not passed.
+//  Call debouncedIncrement() again.
+debouncedIncrement(); // i = 0
+
+// t = 100: i is still 0 because it has only
+//  been 50ms since the last debouncedIncrement() at t = 50.
+
+// t = 150: Because 100ms have passed since
+//  the last debouncedIncrement() at t = 50,
+//  increment was invoked and i is now 1.`}</code></pre>
+        <h3>Follow-up</h3>
+        <ul>
+          <li>
+            Debounce with a <code>cancel()</code> method to cancel delayed
+            invocations and a <code>flush()</code> method to immediately invoke
+            them.
+          </li>
+          <li>
+            Implement <code>throttle</code>, which is similar to debounce but a
+            little different.
+          </li>
+        </ul>
+      </div>
     ),
   },
   notes: [

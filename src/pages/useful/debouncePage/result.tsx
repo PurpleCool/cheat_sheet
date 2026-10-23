@@ -3,7 +3,6 @@ import debounce from "./debounce";
 
 export default function Result() {
   const messageId = useId();
-  const [message, setMessage] = useState("hello");
   const [output, setOutput] = useState<string[]>([]);
   const [debounced] = useState(() =>
     debounce((value: string) => {
@@ -16,20 +15,17 @@ export default function Result() {
   return (
     <section className="result" aria-label="Демонстрация debounce">
       <p>
-        Задержка: 2000 мс. «Вызвать» передаёт текущее сообщение в обёртку.
-        Повторное нажатие перезапускает ожидание. flush() выполняет ожидающий
+        Задержка: 2000 мс. Ввод, вставка или удаление текста передаёт текущее
+        сообщение в обёртку и перезапускает ожидание. flush() выполняет ожидающий
         вызов сразу, cancel() отменяет его.
       </p>
       <label htmlFor={messageId}>Сообщение</label>
       <input
         id={messageId}
-        value={message}
-        onChange={(event) => setMessage(event.target.value)}
+        defaultValue="hello"
+        onInput={(event) => debounced(event.currentTarget.value)}
       />
       <div>
-        <button type="button" onClick={() => debounced(message)}>
-          Вызвать
-        </button>{" "}
         <button type="button" onClick={() => debounced.flush()}>
           flush()
         </button>{" "}
