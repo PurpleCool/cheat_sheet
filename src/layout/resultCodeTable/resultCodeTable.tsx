@@ -1,8 +1,8 @@
-import React, { Children } from "react";
+import type { ReactNode } from "react";
 import "./resultCodeTable.css";
 
 interface ResultCodeTableProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export default function ResultCodeTable({ children }: ResultCodeTableProps) {

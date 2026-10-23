@@ -2,12 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { Home } from "./pages/home";
-import { UseContextPage } from "./pages/useContextPage";
-import { UseRefPage } from "./pages/useRefPage";
-import { Navigation } from "./components/navigation";
-import { paths } from "./constants";
+import { BrowserRouter } from "react-router-dom";
+import App from "./app";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -15,14 +11,8 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <Navigation />
     <BrowserRouter>
-      <Routes>
-        <Route index element={<Home />} />
-        <Route path={paths.useContext} element={<UseContextPage />}></Route>
-        <Route path={paths.useRef} element={<UseRefPage />}></Route>
-        <Route path='*' element={<Navigate to='/' replace />} />
-      </Routes>
+      <App />
     </BrowserRouter>
   </React.StrictMode>
 );

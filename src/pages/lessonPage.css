@@ -1,0 +1,10 @@
+.page {
+  padding: 20px;
+}
+
+.divider {
+  border-bottom: 1px solid;
+  height: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+}

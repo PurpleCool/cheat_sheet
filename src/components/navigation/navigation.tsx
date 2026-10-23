@@ -1,16 +1,17 @@
-import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import { NavLink } from "react-router-dom";
 import { paths } from "../../constants";
 
 function Navigation() {
   return (
     <Navbar bg='light' expand='lg'>
       <Container fluid>
-        <Navbar.Brand href={paths.home}>Home</Navbar.Brand>
+        <Navbar.Brand as={NavLink} to={paths.home}>
+          Home
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls='navbarScroll' />
         <Navbar.Collapse id='navbarScroll'>
           <Nav
@@ -18,12 +19,11 @@ function Navigation() {
             style={{ maxHeight: "100px" }}
             navbarScroll
           >
-            {/* <Nav.Link href={paths.home}>Home</Nav.Link> */}
             <NavDropdown title='Hooks' id='navbarScrollingDropdown'>
-              <NavDropdown.Item href={paths.useContext}>
+              <NavDropdown.Item as={NavLink} to={paths.useContext}>
                 useContext
               </NavDropdown.Item>
-              <NavDropdown.Item href={paths.useRef}>
+              <NavDropdown.Item as={NavLink} to={paths.useRef}>
                 useRef
               </NavDropdown.Item>
             </NavDropdown>

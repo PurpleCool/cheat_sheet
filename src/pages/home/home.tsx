@@ -1,11 +1,10 @@
-import React from 'react';
-import './home.css';
+import "./home.css";
 
 function Home() {
   return (
-    <div className="Home">
-          <div>Home</div>
-    </div>
+    <main className="Home">
+      <h1>React Cheat Sheet</h1>
+    </main>
   );
 }
 
