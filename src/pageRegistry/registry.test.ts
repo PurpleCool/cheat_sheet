@@ -1,7 +1,17 @@
+import { globSync } from "node:fs";
+import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 import { pageModules, pageRegistry } from "./registry";
 
 describe("Vite page discovery", () => {
+  it("discovers exactly every page marker on disk", () => {
+    const files = globSync("**/page.ts", { cwd: resolve(process.cwd(), "src/pages") })
+      .map((file) => `../pages/${file.replaceAll("\\", "/")}`)
+      .sort();
+
+    expect(Object.keys(pageModules).sort()).toEqual(files);
+  });
+
   it("discovers Home and the moved lessons while ignoring support files", () => {
     const files = Object.keys(pageModules);
     expect(files).toEqual(expect.arrayContaining([

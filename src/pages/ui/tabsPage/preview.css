@@ -1,0 +1,13 @@
+.tabs-preview {
+  flex: 1 1 600px;
+  max-width: 768px;
+  min-width: 0;
+  padding: 20px;
+}
+
+.tabs-preview iframe {
+  border: 1px solid #aaa;
+  display: block;
+  height: 220px;
+  width: 100%;
+}

@@ -17,6 +17,8 @@ export default defineConfig(async ({ command }) => ({
       }),
   ],
   test: {
+    // Typed import.meta.glob calls can reuse a stale Vite page list from disk.
+    fsModuleCache: false,
     environment: "jsdom",
     setupFiles: "./src/test/setup.ts",
   },

@@ -7,6 +7,70 @@ import { buildPageRegistry } from "./pageRegistry/buildPageRegistry";
 import { pageModules } from "./pageRegistry/registry";
 
 describe("App routing", () => {
+  it("discovers the direct Tabs route and active UI group", async () => {
+    const user = userEvent.setup();
+    render(<MemoryRouter initialEntries={["/ui/tabs"]}><App /></MemoryRouter>);
+
+    expect(screen.getByRole("heading", { name: "Tabs" })).toBeVisible();
+    const ui = screen.getByRole("button", { name: "UI" });
+    expect(ui).toHaveClass("active");
+    expect(screen.getByRole("button", { name: "Hooks" })).not.toHaveClass("active");
+    await user.click(ui);
+    const link = screen.getByRole("link", { name: "Tabs" });
+    expect(link).toHaveAttribute("href", "/ui/tabs");
+    expect(link).toHaveAttribute("aria-current", "page");
+
+    await user.click(screen.getByRole("link", { name: "Home" }));
+    expect(screen.getByRole("heading", { name: "React Cheat Sheet" })).toBeVisible();
+    expect(ui).not.toHaveClass("active");
+    await user.click(ui);
+    await user.click(screen.getByRole("link", { name: "Tabs" }));
+    expect(screen.getByRole("heading", { name: "Tabs" })).toBeVisible();
+    expect(ui).toHaveClass("active");
+    expect(ui).toHaveAttribute("aria-expanded", "false");
+  });
+
+  it("discovers Holy Grail and its active Layout group from its page descriptor", async () => {
+    const user = userEvent.setup();
+    render(
+      <MemoryRouter initialEntries={["/layout/holy-grail"]}>
+        <App />
+      </MemoryRouter>,
+    );
+
+    expect(screen.getByRole("heading", { name: "Holy Grail" })).toBeVisible();
+    const layout = screen.getByRole("button", { name: "Layout" });
+    expect(layout).toHaveClass("active");
+    expect(screen.getByRole("button", { name: "Hooks" })).not.toHaveClass("active");
+    expect(screen.getByRole("button", { name: "Useful" })).not.toHaveClass("active");
+    await user.click(layout);
+    const link = screen.getByRole("link", { name: "Holy Grail" });
+    expect(link).toHaveAttribute("href", "/layout/holy-grail");
+    expect(link).toHaveAttribute("aria-current", "page");
+    expect(link).toHaveClass("active");
+    expect(link).toHaveAttribute("aria-selected", "true");
+  });
+
+  it("discovers the direct Debounce route and Useful group from its page descriptor", async () => {
+    const user = userEvent.setup();
+    render(
+      <MemoryRouter initialEntries={["/useful/debounce"]}>
+        <App />
+      </MemoryRouter>,
+    );
+
+    expect(screen.getByRole("heading", { name: "Debounce" })).toBeInTheDocument();
+    const useful = screen.getByRole("button", { name: "Useful" });
+    expect(useful).toHaveClass("active");
+    expect(screen.getByRole("button", { name: "Hooks" })).not.toHaveClass("active");
+    await user.click(useful);
+    const link = screen.getByRole("link", { name: "Debounce" });
+    expect(link).toHaveAttribute("href", "/useful/debounce");
+    expect(link).toHaveAttribute("aria-current", "page");
+    expect(link).toHaveClass("active");
+    expect(link).toHaveAttribute("aria-selected", "true");
+  });
+
   it.each([
     ["/useContext", "useContext", "Sharing theme state with useContext"],
     ["/useRef", "useRef", "Counting renders with useRef"],

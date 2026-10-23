@@ -1,0 +1,29 @@
+.holy-grail-preview {
+  flex: 1 1 600px;
+  max-width: 768px;
+  min-width: 0;
+  padding: 20px;
+}
+
+.holy-grail-preview-controls {
+  align-items: center;
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: auto minmax(0, 1fr) 4rem;
+  margin-bottom: 0.75rem;
+}
+
+.holy-grail-preview-controls input {
+  min-width: 0;
+  width: 100%;
+}
+
+.holy-grail-preview-viewport {
+  border: 1px solid #aaa;
+  overflow-x: auto;
+}
+
+.holy-grail-preview iframe {
+  border: 0;
+  display: block;
+}

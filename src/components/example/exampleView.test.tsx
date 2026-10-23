@@ -33,6 +33,17 @@ function expectActiveTab(tab: HTMLElement, example: ExampleDefinition) {
 }
 
 describe("ExampleView", () => {
+  it.each([useContextExample, ...useRefExamples])(
+    "omits exercise UI for the existing $id example without metadata",
+    (example) => {
+      const { container } = render(<ExampleView example={example} />);
+
+      expect(container.querySelector("details")).toBeNull();
+      expect(screen.queryByText("Условие задачи")).not.toBeInTheDocument();
+      expect(screen.queryByRole("link", { name: /Источник/ })).not.toBeInTheDocument();
+    },
+  );
+
   it("renders and switches between raw source files", async () => {
     const user = userEvent.setup();
     render(<ExampleView example={useContextExample} />);

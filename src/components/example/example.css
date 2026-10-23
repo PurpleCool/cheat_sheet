@@ -33,6 +33,17 @@
   padding: 0 20px;
 }
 
+.example-note .exercise-code {
+  background: #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 0.35rem;
+  color: #222;
+  line-height: 1.5;
+  overflow-x: auto;
+  padding: 1rem;
+  white-space: pre;
+}
+
 .source-structure {
   margin: 20px;
   max-width: 728px;
