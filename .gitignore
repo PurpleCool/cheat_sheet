@@ -3,6 +3,9 @@
 # JetBrains IDEs
 .idea/
 
+# VS Code
+.vscode/
+
 # dependencies
 /node_modules
 /.pnp
