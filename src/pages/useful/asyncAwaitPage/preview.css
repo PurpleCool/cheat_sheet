@@ -1,0 +1,83 @@
+.async-preview {
+  flex: 1 1 560px;
+  min-width: 0;
+  padding: 1rem;
+}
+
+.async-preview__intro {
+  margin: 0 0 1rem;
+}
+
+.async-preview__scenarios {
+  display: grid;
+  gap: 1rem;
+}
+
+.async-scenario {
+  border: 1px solid #d7dce1;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.async-scenario h3 {
+  font-size: 1.1rem;
+  margin: 0 0 0.5rem;
+}
+
+.async-scenario p {
+  margin: 0 0 0.75rem;
+}
+
+.async-scenario details {
+  margin-bottom: 0.75rem;
+}
+
+.async-scenario details pre,
+.async-scenario__output {
+  background: #f6f8fa;
+  border-radius: 0.25rem;
+  min-width: 0;
+  overflow-x: auto;
+  padding: 0.75rem;
+}
+
+.async-scenario details pre {
+  margin: 0.5rem 0 0;
+  white-space: pre-wrap;
+}
+
+.async-scenario__implementations {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.async-implementation {
+  border-left: 3px solid #d7dce1;
+  min-width: 0;
+  padding-left: 0.75rem;
+}
+
+.async-implementation h4 {
+  font-size: 1rem;
+  margin: 0 0 0.5rem;
+}
+
+.async-implementation button {
+  margin-bottom: 0.75rem;
+}
+
+.async-scenario__output ol {
+  margin: 0.5rem 0 0.75rem;
+  padding-left: 1.5rem;
+}
+
+.async-scenario__output p:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 700px) {
+  .async-scenario__implementations {
+    grid-template-columns: 1fr;
+  }
+}
