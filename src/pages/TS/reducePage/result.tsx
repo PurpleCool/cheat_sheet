@@ -29,14 +29,14 @@ const scenarios: Scenario[] = [
   {
     id: "sum",
     title: "Сумма чисел",
-    description: "Аккумулятор и элементы имеют тип number.",
+    description: "Складываем все числа массива и получаем их общую сумму.",
     input: numbers,
     run: () => reduce(numbers, (total: number, number: number) => total + number, 0),
   },
   {
     id: "filter",
     title: "Длинные слова",
-    description: "Из массива строк собирается новый массив строк.",
+    description: "Оставляем только слова, в которых не менее 7 символов.",
     input: words,
     run: () => reduce(words, (longWords: string[], word: string) => {
       if (word.length >= 7) longWords.push(word);
@@ -46,7 +46,7 @@ const scenarios: Scenario[] = [
   {
     id: "index",
     title: "Пользователи по id",
-    description: "Массив объектов превращается в объект-словарь.",
+    description: "Создаём объект, где ключ — id пользователя, а значение — сам пользователь.",
     input: users,
     run: () => reduce(users, (usersById: Record<number, User>, user: User) => {
       usersById[user.id] = user;
