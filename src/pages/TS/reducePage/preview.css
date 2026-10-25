@@ -1,0 +1,56 @@
+.reduce-preview {
+  flex: 1 1 520px;
+  min-width: 0;
+  padding: 1rem;
+}
+
+.reduce-preview__intro {
+  margin: 0 0 1rem;
+}
+
+.reduce-preview__scenarios {
+  display: grid;
+  gap: 1rem;
+}
+
+.reduce-scenario {
+  border: 1px solid #d7dce1;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.reduce-scenario h3 {
+  font-size: 1.1rem;
+  margin: 0 0 0.5rem;
+}
+
+.reduce-scenario p {
+  margin: 0 0 0.75rem;
+}
+
+.reduce-scenario__run {
+  align-items: start;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: auto minmax(0, 1fr);
+}
+
+.reduce-scenario__value {
+  min-width: 0;
+}
+
+.reduce-scenario__value pre {
+  background: #f6f8fa;
+  border-radius: 0.25rem;
+  margin: 0.25rem 0 0.75rem;
+  min-height: 2.5rem;
+  overflow-x: auto;
+  padding: 0.75rem;
+  white-space: pre-wrap;
+}
+
+@media (max-width: 700px) {
+  .reduce-scenario__run {
+    grid-template-columns: 1fr;
+  }
+}
