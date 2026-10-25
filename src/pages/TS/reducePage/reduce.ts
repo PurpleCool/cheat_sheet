@@ -1,4 +1,4 @@
-function reduce(array, callback, initial) {
+function reduce<Item, Initial>(array: Item[], callback: (acc: Initial, item: Item, i: number) => Initial, initial: Initial): Initial {
   let acc = initial;
 
   for (let i = 0; i < array.length; i++) {
