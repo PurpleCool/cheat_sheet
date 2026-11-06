@@ -21,6 +21,7 @@ describe("Vite page discovery", () => {
       "../pages/hooks/useTimeoutPage/page.ts",
       "../pages/hooks/useIsFirstRenderPage/page.ts",
       "../pages/hooks/usePreviousPage/page.ts",
+      "../pages/hooks/useThrottleWithLeadingPage/page.ts",
     ]));
     for (const file of files) {
       expect(file).toMatch(/^\.\.\/pages\/(?:.+\/)?page\.ts$/);
@@ -43,6 +44,7 @@ describe("Vite page discovery", () => {
       { title: "useTimeout", path: "/useTimeout" },
       { title: "useIsFirstRender", path: "/useIsFirstRender" },
       { title: "usePrevious", path: "/usePrevious" },
+      { title: "useThrottleWithLeading", path: "/useThrottleWithLeading" },
     ]));
     expect(pageRegistry.navigation).toEqual(expect.arrayContaining([expect.objectContaining({
       kind: "group",
@@ -54,6 +56,7 @@ describe("Vite page discovery", () => {
         { kind: "page", id: "page:hooks/useTimeoutPage", title: "useTimeout", path: "/useTimeout" },
         { kind: "page", id: "page:hooks/useIsFirstRenderPage", title: "useIsFirstRender", path: "/useIsFirstRender" },
         { kind: "page", id: "page:hooks/usePreviousPage", title: "usePrevious", path: "/usePrevious" },
+        { kind: "page", id: "page:hooks/useThrottleWithLeadingPage", title: "useThrottleWithLeading", path: "/useThrottleWithLeading" },
       ]),
     })]));
   });
