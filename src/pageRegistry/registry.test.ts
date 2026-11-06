@@ -18,6 +18,7 @@ describe("Vite page discovery", () => {
       "../pages/home/page.ts",
       "../pages/hooks/useContextPage/page.ts",
       "../pages/hooks/useRefPage/page.ts",
+      "../pages/hooks/useTimeoutPage/page.ts",
     ]));
     for (const file of files) {
       expect(file).toMatch(/^\.\.\/pages\/(?:.+\/)?page\.ts$/);
@@ -37,6 +38,7 @@ describe("Vite page discovery", () => {
       { title: "Home", path: "/" },
       { title: "useContext", path: "/useContext" },
       { title: "useRef", path: "/useRef" },
+      { title: "useTimeout", path: "/useTimeout" },
     ]));
     expect(pageRegistry.navigation).toEqual(expect.arrayContaining([expect.objectContaining({
       kind: "group",
@@ -45,6 +47,7 @@ describe("Vite page discovery", () => {
       children: expect.arrayContaining([
         { kind: "page", id: "page:hooks/useContextPage", title: "useContext", path: "/useContext" },
         { kind: "page", id: "page:hooks/useRefPage", title: "useRef", path: "/useRef" },
+        { kind: "page", id: "page:hooks/useTimeoutPage", title: "useTimeout", path: "/useTimeout" },
       ]),
     })]));
   });
