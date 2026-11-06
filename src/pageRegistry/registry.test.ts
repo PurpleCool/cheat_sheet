@@ -18,6 +18,11 @@ describe("Vite page discovery", () => {
       "../pages/home/page.ts",
       "../pages/hooks/useContextPage/page.ts",
       "../pages/hooks/useRefPage/page.ts",
+      "../pages/hooks/useTimeoutPage/page.ts",
+      "../pages/hooks/useIsFirstRenderPage/page.ts",
+      "../pages/hooks/usePreviousPage/page.ts",
+      "../pages/hooks/useThrottleWithLeadingPage/page.ts",
+      "../pages/hooks/useHoverPage/page.ts",
     ]));
     for (const file of files) {
       expect(file).toMatch(/^\.\.\/pages\/(?:.+\/)?page\.ts$/);
@@ -37,6 +42,11 @@ describe("Vite page discovery", () => {
       { title: "Home", path: "/" },
       { title: "useContext", path: "/useContext" },
       { title: "useRef", path: "/useRef" },
+      { title: "useTimeout", path: "/useTimeout" },
+      { title: "useIsFirstRender", path: "/useIsFirstRender" },
+      { title: "usePrevious", path: "/usePrevious" },
+      { title: "useThrottleWithLeading", path: "/useThrottleWithLeading" },
+      { title: "useHover", path: "/useHover" },
     ]));
     expect(pageRegistry.navigation).toEqual(expect.arrayContaining([expect.objectContaining({
       kind: "group",
@@ -45,6 +55,11 @@ describe("Vite page discovery", () => {
       children: expect.arrayContaining([
         { kind: "page", id: "page:hooks/useContextPage", title: "useContext", path: "/useContext" },
         { kind: "page", id: "page:hooks/useRefPage", title: "useRef", path: "/useRef" },
+        { kind: "page", id: "page:hooks/useTimeoutPage", title: "useTimeout", path: "/useTimeout" },
+        { kind: "page", id: "page:hooks/useIsFirstRenderPage", title: "useIsFirstRender", path: "/useIsFirstRender" },
+        { kind: "page", id: "page:hooks/usePreviousPage", title: "usePrevious", path: "/usePrevious" },
+        { kind: "page", id: "page:hooks/useThrottleWithLeadingPage", title: "useThrottleWithLeading", path: "/useThrottleWithLeading" },
+        { kind: "page", id: "page:hooks/useHoverPage", title: "useHover", path: "/useHover" },
       ]),
     })]));
   });
