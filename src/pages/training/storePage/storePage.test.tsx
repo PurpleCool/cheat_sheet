@@ -19,21 +19,21 @@ vi.mock("@codesandbox/sandpack-react", () => ({
 }));
 
 describe("Store page", () => {
-  it("discovers the direct route and active Useful group", async () => {
+  it("discovers the direct route and active Training group", async () => {
     const user = userEvent.setup();
     render(
-      <MemoryRouter initialEntries={["/useful/store"]}>
+      <MemoryRouter initialEntries={["/training/store"]}>
         <App />
       </MemoryRouter>,
     );
 
     expect(screen.getByRole("heading", { name: "Store" })).toBeVisible();
     expect(screen.getByTestId("store-entry")).toBeVisible();
-    const usefulGroup = screen.getByRole("button", { name: "Useful" });
-    expect(usefulGroup).toHaveClass("active");
-    await user.click(usefulGroup);
+    const trainingGroup = screen.getByRole("button", { name: "Training" });
+    expect(trainingGroup).toHaveClass("active");
+    await user.click(trainingGroup);
     const link = screen.getByRole("link", { name: "Store" });
-    expect(link).toHaveAttribute("href", "/useful/store");
+    expect(link).toHaveAttribute("href", "/training/store");
     expect(link).toHaveAttribute("aria-current", "page");
     expect(link).toHaveClass("active");
   });

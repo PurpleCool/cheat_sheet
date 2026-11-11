@@ -3,6 +3,6 @@ import CompressPage from "./compressPage";
 
 export default {
   title: "compress",
-  path: "/useful/compress",
+  path: "/training/compress",
   component: CompressPage,
 } satisfies PageDefinition;

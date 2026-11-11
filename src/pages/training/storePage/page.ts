@@ -3,6 +3,6 @@ import StorePage from "./storePage";
 
 export default {
   title: "Store",
-  path: "/useful/store",
+  path: "/training/store",
   component: StorePage,
 } satisfies PageDefinition;
