@@ -19,21 +19,21 @@ vi.mock("@codesandbox/sandpack-react", () => ({
 }));
 
 describe("compress page", () => {
-  it("discovers the direct route and active Useful group", async () => {
+  it("discovers the direct route and active Training group", async () => {
     const user = userEvent.setup();
     render(
-      <MemoryRouter initialEntries={["/useful/compress"]}>
+      <MemoryRouter initialEntries={["/training/compress"]}>
         <App />
       </MemoryRouter>,
     );
 
     expect(screen.getByRole("heading", { name: "compress" })).toBeVisible();
     expect(screen.getByTestId("compress-entry")).toBeVisible();
-    const usefulGroup = screen.getByRole("button", { name: "Useful" });
-    expect(usefulGroup).toHaveClass("active");
-    await user.click(usefulGroup);
+    const trainingGroup = screen.getByRole("button", { name: "Training" });
+    expect(trainingGroup).toHaveClass("active");
+    await user.click(trainingGroup);
     const link = screen.getByRole("link", { name: "compress" });
-    expect(link).toHaveAttribute("href", "/useful/compress");
+    expect(link).toHaveAttribute("href", "/training/compress");
     expect(link).toHaveAttribute("aria-current", "page");
     expect(link).toHaveClass("active");
   });
