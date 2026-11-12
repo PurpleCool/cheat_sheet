@@ -32,6 +32,7 @@ export default function SandpackPlayground({
     <Sandpack
       customSetup={{
         dependencies: {
+          ...example.playground.dependencies,
           react: "19.3.1",
           "react-dom": "19.3.1",
         },

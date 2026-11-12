@@ -27,6 +27,7 @@ export interface ExampleDefinition {
   notes?: string[];
   playground?: {
     entryFile: string;
+    dependencies?: Record<string, string>;
   };
   sourceStructure?: SourceStructureGroup[];
 }
